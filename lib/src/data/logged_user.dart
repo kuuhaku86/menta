@@ -13,16 +13,18 @@ class LoggedUser {
     print(state_user);
   }
 
-  void Login(User user) {
+  static Login(User user) {
     if (_instance != null) return;
     _instance = LoggedUser._internal(user);
   }
 
-  void Logout() {
+  static Logout() {
     _instance = null;
   }
 
   static Future<bool> isLogin() async {
     return _instance != null ? true : false;
   }
+
+  User getUser() => state_user;
 }
