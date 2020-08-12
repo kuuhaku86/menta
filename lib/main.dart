@@ -41,8 +41,15 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(),
-      ),
+        child: AnimatedOpacity(
+          opacity: 1, 
+          duration: Duration(seconds: 3),
+          child: Image.asset(
+            "assets/images/logo.png",
+            height: 100.0,
+          ),
+        ),
+      )  
     );
   }
 
@@ -52,7 +59,7 @@ class _MainAppState extends State<MainApp> {
     Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (_) {
         //TODO ganti null dengan HomePage
-        return login ? Login() : null;
+        return login ? null : Login();
       }
     ));
   });
