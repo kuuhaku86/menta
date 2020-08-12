@@ -23,6 +23,6 @@ class LoggedUser {
   }
 
   static Future<bool> isLogin() async {
-    return _instance != null ? true : null;
+    return _instance != null ? true : false;
   }
 }
