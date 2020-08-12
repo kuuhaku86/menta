@@ -7,5 +7,5 @@ class User {
   UserType type;
 
   User(this.nama_lengkap, this.nik, this.tanggal_lahir, this.alamat, this.money,
-      this.email, this.password);
+      this.email, this.password, this.type);
 }
