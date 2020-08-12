@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 
 void main() {
@@ -58,8 +59,8 @@ class _MainAppState extends State<MainApp> {
 
     Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (_) {
-        //TODO ganti null dengan HomePage
-        return login ? null : Login();
+        return login ? HomePage() : Login();
+//        return login ? Login() : HomePage();
       }
     ));
   });
