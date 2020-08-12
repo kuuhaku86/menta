@@ -21,4 +21,8 @@ class LoggedUser {
   void Logout() {
     _instance = null;
   }
+
+  static Future<bool> isLogin() async {
+    return _instance != null ? true : null;
+  }
 }
