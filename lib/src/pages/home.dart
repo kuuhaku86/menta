@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:menta/src/data/dummy.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -45,35 +46,19 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Container(
               height: 200,
-              child: ListView(
+              child: ListView.builder(
+                itemCount: list_story.length,
                 padding: const EdgeInsets.all(10.0),
-                children: <Widget>[
-                  Container(
-                    child: Text('Current Story', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),),
-                  ),
-                  CustomListItemTwo(
-                    thumbnail: Container(
-                      decoration: const BoxDecoration(color: Colors.pink),
-                    ),
-                    title: 'Flutter 1.0 Launch',
-                    subtitle:
-                    'Flutter continues to improve and expand its horizons.'
-                        'This text should max out at two lines and clip',
-                    author: 'Dash',
-                    publishDate: 'Dec 28',
-                    readDuration: '5 mins',
-                  ),
-                  CustomListItemTwo(
-                    thumbnail: Container(
-                      decoration: const BoxDecoration(color: Colors.blue),
-                    ),
-                    title: 'Flutter 1.2 Release - Continual updates to the framework',
-                    subtitle: 'Flutter once again improves and makes updates.',
-                    author: 'Flutter',
-                    publishDate: 'Feb 26',
-                    readDuration: '12 mins',
-                  ),
-                ],
+                itemBuilder: (BuildContext context, int index){
+                  if(index == 0){
+                    return Container(
+                      child: Text('Current Story',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),),
+                    );
+                  }else{
+                    return list_story[index];
+                  }
+                },
               ),
             ),
             flex: 1,

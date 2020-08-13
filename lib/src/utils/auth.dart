@@ -1,5 +1,5 @@
 import 'package:menta/src/classes/user.dart';
-import 'package:menta/src/data/list_user.dart';
+import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/utils/user_type.dart';
 
 class AppAuth {

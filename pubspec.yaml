@@ -49,6 +49,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/konsultasi_offline.png
     - assets/images/konsultasi_online.png
+    - assets/images/patient_icon.png
+    - assets/images/psychiatrist_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
