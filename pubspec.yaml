@@ -53,6 +53,7 @@ flutter:
     - assets/images/psychiatrist_icon.png
     - assets/images/konsultasi_offline.png
     - assets/images/konsultasi_online.png
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -79,3 +80,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: fonts/Lato/Lato-Regular.ttf
+        - asset: fonts/Lato/Lato-Italic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato_Bold.ttf
+          weight: 700
