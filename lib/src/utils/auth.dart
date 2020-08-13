@@ -24,4 +24,8 @@ class AppAuth {
 
     return null;
   }
+
+  static register(User user) {
+    list_user.add(user);
+  }
 }
