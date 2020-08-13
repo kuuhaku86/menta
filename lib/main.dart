@@ -57,11 +57,10 @@ class _MainAppState extends State<MainApp> {
   }
 
   _checkLogin() => Timer(Duration(seconds: 3), () async {
-    final login = await LoggedUser.isLogin();
+        final login = await LoggedUser.isLogin();
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      //TODO ganti null dengan HomePage
-          return login ? null : Login();
-    }));
-  });
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+          return login ? HomePage() : Login();
+        }));
+      });
 }

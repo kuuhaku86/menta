@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menta/src/utils/colors.dart';
-import 'package:menta/src/utils/size.dart';
 
 class AuthTitle extends StatelessWidget {
   AuthTitle(this.title);
