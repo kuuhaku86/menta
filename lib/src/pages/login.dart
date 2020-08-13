@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/user_type_data.dart';
+import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/utils/auth.dart';
 import 'package:menta/src/utils/colors.dart';
-import 'package:menta/src/utils/size.dart';
 import 'package:menta/src/utils/user_type.dart';
 import 'package:menta/src/utils/validators.dart';
 import 'package:menta/src/widgets/auth_submit_button.dart';
@@ -176,6 +176,9 @@ class _LoginState extends State<Login> {
   }
 
   login(BuildContext context) {
+    print(_emailTextController.text);
+    print(_passwordTextController.text);
+    print(user_type);
     User user = AppAuth.accountExist(
       email: _emailTextController.text,
       password: _passwordTextController.text,
@@ -185,7 +188,9 @@ class _LoginState extends State<Login> {
     if (user != null) {
       LoggedUser.Login(user);
       print(LoggedUser().getUser().email);
-      //TODO implementasi ke homepage
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return HomePage();
+      }));
     } else {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text("Akun Tidak Ditemukan"),

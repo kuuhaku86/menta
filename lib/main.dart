@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/utils/size.dart';
 
@@ -59,8 +60,7 @@ class _MainAppState extends State<MainApp> {
         final login = await LoggedUser.isLogin();
 
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          //TODO ganti null dengan HomePage
-          return login ? null : Login();
+          return login ? HomePage() : Login();
         }));
       });
 }

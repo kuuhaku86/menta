@@ -11,10 +11,14 @@ class AppAuth {
     return false;
   }
 
-  static User accountExist({String email, String password, UserType user_type}) {
+  static User accountExist(
+      {String email, String password, UserType user_type}) {
     for (var item in list_user) {
       if (item.email == email) {
-        return (item.password != password || item.type != user_type) ? null : item;
+        print(item.type);
+        return (item.password != password || item.type != user_type)
+            ? null
+            : item;
       }
     }
 

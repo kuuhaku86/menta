@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:menta/src/classes/user_type_data.dart';
-import 'package:menta/src/utils/size.dart';
 import 'package:menta/src/utils/user_type.dart';
 
 double scale = 0.25;
