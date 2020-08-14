@@ -37,9 +37,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-//      home: MainApp(),
+      home: MainApp(),
 //      // Debugging
-      home: SearchingPage(),
+//      home: SearchingPage(),
+//      home: HomePage()
     );
   }
 }

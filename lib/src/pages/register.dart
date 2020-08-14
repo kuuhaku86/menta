@@ -26,8 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   UserType user_type;
   final TextEditingController _name_text_controller = TextEditingController();
   final TextEditingController _email_text_controller = TextEditingController();
-  final TextEditingController _password_text_controller =
-      TextEditingController();
+  final TextEditingController _password_text_controller = TextEditingController();
   final TextEditingController _alamat_text_controller = TextEditingController();
   final TextEditingController _nik_text_controller = TextEditingController();
   DateTime _tanggal_lahir;
