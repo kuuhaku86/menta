@@ -24,6 +24,6 @@ RaisedButton submitButton({bool isButtonEnabled, String text, VoidCallback callb
         ),
       ),
     ),
-    onPressed: callback,
+    onPressed: isButtonEnabled ? callback : null,
   );
 }

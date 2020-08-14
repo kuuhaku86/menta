@@ -3,11 +3,13 @@ import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/user_type_data.dart';
 import 'package:menta/src/pages/home.dart';
+import 'package:menta/src/pages/register.dart';
 import 'package:menta/src/utils/auth.dart';
-import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
 import 'package:menta/src/utils/validators.dart';
+import 'package:menta/src/widgets/auth_bottom_text.dart';
 import 'package:menta/src/widgets/auth_submit_button.dart';
+import 'package:menta/src/widgets/auth_text.dart';
 import 'package:menta/src/widgets/auth_text_field.dart';
 import 'package:menta/src/widgets/auth_title.dart';
 import 'package:menta/src/widgets/auth_user_type_button.dart';
@@ -23,12 +25,14 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<FocusNode> focus_nodes = [];
+  String user_type_name;
 
   @override
   void initState() {
     super.initState();
 
     user_type = UserType.patient;
+    user_type_name = map_user_type_data[UserType.patient].name;
 
     for (var i = 0; i < 2; i++) {
       focus_nodes.add(new FocusNode());
@@ -49,7 +53,8 @@ class _LoginState extends State<Login> {
             children: <Widget>[
               AuthTitle("Choose Account Type And Login"),
               appendUserTypeRow(),
-              appendLoginText(),
+              appendAuthText(user_type,
+                  "Hello $user_type_name!\nPlease fill out the form to get started"),
               appendInputColumn(),
               appendSubmitRow(context),
             ],
@@ -62,6 +67,7 @@ class _LoginState extends State<Login> {
   changeUserType(UserType button_user_type) {
     this.setState(() {
       user_type = button_user_type;
+      user_type_name = map_user_type_data[user_type].name;
     });
   }
 
@@ -82,18 +88,6 @@ class _LoginState extends State<Login> {
             () =>
                 changeUserType(map_user_type_data[UserType.patient].user_type)),
       ]),
-    );
-  }
-
-  Text appendLoginText() {
-    String user_name = map_user_type_data[user_type].name;
-    return Text(
-      "Hello $user_name!\nPlease fill out the form to get started",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: AppColors.grey_font,
-        fontSize: 20,
-      ),
     );
   }
 
@@ -133,43 +127,16 @@ class _LoginState extends State<Login> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          signUpText(),
+          authBottomText(
+            context: context,
+            unlinked_text: "No Account ? ",
+            linked_text: "Sign Up",
+            destination: RegisterPage()
+          ),
           submitButton(
               isButtonEnabled: isLoginButtonEnabled(),
               text: "Login",
               callback: () => login(context))
-        ],
-      ),
-    );
-  }
-
-  Container signUpText() {
-    return Container(
-      height: 20,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "No Account ? ",
-            style: TextStyle(
-              color: AppColors.grey_font,
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          GestureDetector(
-            child: Text(
-              "Sign Up",
-              style: TextStyle(
-                color: AppColors.big_blue_font,
-                decoration: TextDecoration.underline,
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            //TODO implementasi menuju halaman register
-            onTap: () => {},
-          ),
         ],
       ),
     );
