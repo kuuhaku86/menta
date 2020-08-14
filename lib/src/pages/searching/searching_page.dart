@@ -1,43 +1,132 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/psychiatrist.dart';
+import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/utils/images.dart';
+import 'package:menta/src/widgets/system/light_status_bar.dart';
+import 'package:provider/provider.dart';
 
 class SearchingPage extends StatefulWidget {
-
   @override
   State createState() => _State();
 }
 
 class _State extends State<SearchingPage> {
+  PsychiatristProvider psychiatristProvider;
 
   @override
   Widget build(context) {
+    setUpProvider(context);
+
     return Scaffold(
-      body: _psychiatristList,
-    )
+      body: LightStatusBar(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
+          child: Column(
+            children: [
+              _searchField,
+              _filter,
+              Expanded(
+                child: _psychiatristList,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  setUpProvider(context) {
+    psychiatristProvider = Provider.of<PsychiatristProvider>(context);
+  }
+
+  get _searchField {
+    return TextFormField(
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          suffixIcon: Icon(Icons.keyboard_voice),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+//          fillColor: Color(0xfff3f3f4),
+//          filled: true,
+          hintText: "Search Psychiatrist"),
+    );
+  }
+
+  get _filter {
+    return Container(
+      margin: EdgeInsets.only(left: 15, right: 15, top: 5),
+      child: Row(
+        children: [
+          Text(
+            "Sort by:",
+            style: TextStyle(
+                color: AppColors.textGray1,
+                fontFamily: AppFonts.LATO,
+                fontSize: 13.0),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            "Rating",
+            style: TextStyle(
+                color: AppColors.primaryDark,
+                fontFamily: AppFonts.LATO,
+                fontSize: 13.0),
+          ),
+          Icon(
+            Icons.keyboard_arrow_down,
+            color: Color(0XFF223B75),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Row(
+            children: [
+              Image.asset(AppImages.filter),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Filter",
+                  style: TextStyle(
+                      color: AppColors.primaryDark,
+                      fontFamily: AppFonts.LATO,
+                      fontSize: 13.0),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   listItem(PsychiatristModel p) {
-    keyValue(key, value) {
+    keyValue(key, value, {endspace = 5.0}) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             key,
             style: TextStyle(
                 fontFamily: AppFonts.LATO,
                 fontSize: 10.0,
-                color: AppColors.textGray2
-            ),
+                color: AppColors.textGray2),
           ),
           Text(
             value,
             style: TextStyle(
                 fontFamily: AppFonts.LATO,
                 fontSize: 11.0,
-                color: AppColors.primaryText
-            ),
+                color: AppColors.primaryText),
           )
         ],
       );
@@ -47,25 +136,26 @@ class _State extends State<SearchingPage> {
       return Row(
         children: [
           Image.asset(icon),
+          SizedBox(
+            width: 5,
+          ),
           Text(
             text,
             style: TextStyle(
                 fontSize: 11.0,
                 fontFamily: AppFonts.LATO,
-                color: AppColors.textGray1
-            ),
+                color: AppColors.textGray1),
           )
         ],
-      )
+      );
     }
 
     return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6.0)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
       child: Container(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -77,83 +167,209 @@ class _State extends State<SearchingPage> {
                     width: 36.0,
                   ),
                 ),
-                Column(
-                  children: [
-                    // Name
-                    Text(
-                      p.fullName,
-                      style: TextStyle(
-                          color: AppColors.primaryText,
-                          fontSize: 15.0,
+
+                SizedBox(
+                  width: 15,
+                ),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name
+                      Text(
+                        p.fullName,
+                        style: TextStyle(
+                            color: AppColors.primaryText,
+                            fontSize: 15.0,
+                            fontFamily: AppFonts.LATO,
+                            fontWeight: FontWeight.bold),
+                      ),
+
+                      SizedBox(
+                        height: 5.0,
+                      ),
+
+                      // Expertise
+                      Text(
+                        p.expertise,
+                        style: TextStyle(
                           fontFamily: AppFonts.LATO,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-
-                    // Expertise
-                    Text(
-                      p.expertise,
-                      style: TextStyle(
-                        fontFamily: AppFonts.LATO,
-                        color: AppColors.textGray1,
-                        fontSize: 12.0,
-                      ),
-                    ),
-
-                    // Location
-                    Column(
-                      children: [
-                        Image.asset(
-                            AppImages.pin
+                          color: AppColors.textGray1,
+                          fontSize: 12.0,
                         ),
-                        Text(
-                          p.city,
-                          style: TextStyle(
-                              color: AppColors.textGray1,
-                              fontSize: 10.0,
-                              fontFamily: AppFonts.LATO
-                          ),
-                        )
-                      ],
+                      ),
+
+                      SizedBox(
+                        height: 5.0,
+                      ),
+
+                      // Location
+                      Column(
+                        children: [
+                          Image.asset(AppImages.pin),
+                          Text(
+                            p.city,
+                            style: TextStyle(
+                                color: AppColors.textGray1,
+                                fontSize: 10.0,
+                                fontFamily: AppFonts.LATO),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+
+                // Rating and friend
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // Rating
+                    Card(
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0)),
+                      color: AppColors.yellowRating,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        child: Row(
+                          children: [
+                            Image.asset(AppImages.star),
+                            Text(
+                              "${p.rating}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: AppFonts.LATO,
+                                  fontSize: 11.0),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    // Availability
+                    Text(
+                      "Available Today",
+                      style: TextStyle(
+                          color: AppColors.greenAvailable,
+                          fontSize: 10.0,
+                          fontFamily: AppFonts.LATO),
                     )
                   ],
                 )
               ],
             ),
 
+            SizedBox(
+              height: 10,
+            ),
+
             // Key-value
             Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                keyValue("Experience", "${p.experienceInYears} Years"),
-                keyValue(
-                    "Likes", "${p.likesInNumber} (${p.likesInPercentage}%)"),
-                keyValue("Reviews", "${p.reviews.length}")
+                SizedBox(
+                  width: 50.0,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      keyValue("Experience", "${p.experienceInYears} Years"),
+                      keyValue("Likes",
+                          "${p.likesInNumber} (${p.likesInPercentage}%)"),
+                      keyValue("Reviews", "${p.reviews.length}")
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 50.0,
+                )
               ],
             ),
 
-            // Communication buttons
+            SizedBox(
+              height: 15,
+            ),
+
             Row(
               children: [
-                communicateBtn(AppImages.chat, "Chat"),
-                communicateBtn(AppImages.call, "Audio"),
-                communicateBtn(AppImages.video, "Video")
+                SizedBox(
+                  width: 20.0,
+                ),
+
+                // Communication buttons
+
+                Expanded(
+                    child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0)),
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        communicateBtn(AppImages.chat, "Chat"),
+                        communicateBtn(AppImages.call, "Audio"),
+                        communicateBtn(AppImages.video, "Video")
+                      ],
+                    ),
+                  ),
+                )),
+
+                // Booking button
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 10),
+                  child: MaterialButton(
+                    onPressed: () {
+                      // TODO
+                    },
+                    color: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0)),
+                    child: Text(
+                      "Book",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: AppFonts.LATO,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0),
+                    ),
+                  ),
+                )
               ],
             )
           ],
         ),
       ),
-    )
+    );
   }
 
   get _psychiatristList {
-    // Temporary
-    final list = [PsychiatristModel()]
+    final list = psychiatristProvider.list;
+
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: list.length,
+        itemCount: list.length * 2,
         itemBuilder: (context, i) {
-          return listItem(list[i]);
-        }
-    );
+          final index = i ~/ 2;
+
+          if (i.isOdd) {
+            return SizedBox(
+              height: 15,
+            );
+          }
+
+          return listItem(list[index]);
+        });
   }
 }
