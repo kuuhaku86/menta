@@ -5,4 +5,8 @@ class AppColors {
   static const Color primary = Color.fromRGBO(47, 91, 202, 1);
   static const Color primary_opacity_reduced = Color.fromRGBO(47, 91, 202, 0.5);
   static const Color grey_font = Color.fromRGBO(143, 134, 143, 1);
+
+  //drawer header (scooter gradient)
+  static const Color start = Color(0xFF36d1dc);
+  static const Color end = Color(0xFF5b86e5);
 }

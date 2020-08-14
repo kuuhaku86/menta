@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/dummy.dart';
+import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/utils/colors.dart';
+import 'package:menta/src/utils/user_type.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
+  User pengguna = LoggedUser().getUser();
 
   Widget innerContainer(BuildContext context){
     return Container(
@@ -49,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 itemCount: list_story.length,
                 padding: const EdgeInsets.all(10.0),
-                itemBuilder: (BuildContext context, int index){
+                itemBuilder: (context, index){
                   if(index == 0){
                     return Container(
                       child: Text('Current Story',
@@ -75,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         child: SizedBox(
           height: 170,
           child: PageView.builder(
-              itemCount: 2,
+              itemCount: (pengguna.type == UserType.psychiatrist) ? 1 : 2,
               controller: PageController(viewportFraction: 0.8),
               onPageChanged: (int index) => {
                 setState(() => _index = index)
@@ -83,8 +88,11 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (_, i){
                 return Transform.scale(
                     scale: i == _index ? 1 : 0.9,
-                    child: (i == 1) ? imageContainer(context, 'assets/images/konsultasi_offline.png') :
-                    imageContainer(context, 'assets/images/konsultasi_online.png')
+                    child: (pengguna.type == UserType.psychiatrist) ? imageContainer(context, 'assets/images/booked_time.png', 'Offline Consultation') : (
+                        (i == 1) ?
+                        imageContainer(context, 'assets/images/offline_consultation.png', 'Offline Consultation') :
+                        imageContainer(context, 'assets/images/online_consultation.png', 'Online Consultation')
+                    )
                 );
               }
           ),
@@ -93,7 +101,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget imageContainer(BuildContext context, String imageUrl){
+  Widget imageContainer(BuildContext context, String imageUrl, String jenis){
     return Container(
       child: Image.asset(imageUrl, fit: BoxFit.fill,),
     );
@@ -117,20 +125,159 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text('Drawer Header'),
+                child: Container(
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      SizedBox(height: 40,),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Icon(
+                              Icons.person
+                          ),
+                        ),
+                        width: double.infinity,
+                      ),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            pengguna.nama_lengkap,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                            ),
+                          ),
+                        ),
+                        width: double.infinity,
+                      ),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            pengguna.email,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15
+                            ),
+                          ),
+                        ),
+                        width: double.infinity,
+                      )
+                    ],
+                  ),
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                    gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [AppColors.start, AppColors.end])
                 ),
               ),
               ListTile(
-                title: Text('Item 1'),
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.settings),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('Settings'),
+                    )
+                  ],
+                ),
                 onTap: () {
                   // Update the state of the app.
                   // ...
                 },
               ),
               ListTile(
-                title: Text('Item 2'),
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.edit),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('Edit Profile'),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.help),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('Help'),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.send),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('Contact'),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              Divider(
+                height: 2,
+              ),
+              ListTile(
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.person_pin),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('About us'),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                title: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(Icons.exit_to_app),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text('Logout'),
+                    )
+                  ],
+                ),
                 onTap: () {
                   // Update the state of the app.
                   // ...
