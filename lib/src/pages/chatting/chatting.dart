@@ -20,12 +20,14 @@ class ChattingPage extends StatefulWidget {
 
 class _State extends State<ChattingPage> {
   ChattingProvider _chattingProvider;
+  final _controller = _Controller();
 
   @override
   Widget build(context) {
     _setUpProvider(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       body: LightStatusBar(
         child: Column(
@@ -57,13 +59,13 @@ class _State extends State<ChattingPage> {
         color: Colors.white,
         alignment: Alignment.centerLeft,
         height: 80,
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
+        padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
         child: Stack(alignment: Alignment.centerLeft, children: [
           Container(
             alignment: Alignment.centerLeft,
             child: IconButton(
               onPressed: () {
-                // TODO
+                Navigator.pop(context);
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -79,7 +81,7 @@ class _State extends State<ChattingPage> {
                 _chatting.enemy,
                 style: TextStyle(
                     color: Color(0XFF2B3137),
-                    fontFamily: AppFonts.LATO,
+                    fontFamily: AppFonts.PRIMARY,
                     fontSize: 17.0),
               ))
         ]));
@@ -91,7 +93,7 @@ class _State extends State<ChattingPage> {
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0));
       final padding = EdgeInsets.symmetric(horizontal: 20, vertical: 15);
       final textStyle = TextStyle(
-          fontFamily: AppFonts.LATO,
+          fontFamily: AppFonts.PRIMARY,
           fontSize: 14.0,
           color: chat.senderIsMe ? Colors.white : Color(0XFF212121));
 
@@ -143,6 +145,7 @@ class _State extends State<ChattingPage> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       color: Color(0XFFF2F2F2),
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         children: [
           Card(
             color: Color(0XFFA2B1C2),
@@ -194,13 +197,25 @@ class _State extends State<ChattingPage> {
             ),
             Expanded(
               child: TextField(
+                controller: _controller.newMessage,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                 ),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  final text = _controller.newMessage.text;
+                  final chat = ChatModel(
+                    message: text,
+                    senderIsMe: true,
+                  );
+                  _chatting.chats.add(chat);
+
+                  _controller.newMessage.clear();
+                });
+              },
               child: Container(
                 width: 40,
                 height: 40.0,
@@ -220,4 +235,8 @@ class _State extends State<ChattingPage> {
       ),
     );
   }
+}
+
+class _Controller {
+  final newMessage = TextEditingController();
 }

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:menta/src/classes/enum/environment.dart';
 import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/data/payment.dart';
 import 'package:menta/src/data/psychiatrist.dart';
-import 'package:menta/src/pages/chatting/chatting.dart';
 import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
+import 'package:menta/src/pages/payment/choose_payment.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/config.dart';
 import 'package:menta/src/utils/size.dart';
@@ -21,14 +22,14 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (c) => ChattingProvider(),
-      )
+      ),
+      ChangeNotifierProvider(create: (c) => PaymentProvider())
     ],
     child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
 //      home: MainApp(),
 //      // Debugging
-      home: ChattingPage(),
+      home: ChoosePaymentPage(),
 //      home: HomePage()
     );
   }
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
 
     final chattingProvider = Provider.of<ChattingProvider>(context);
     chattingProvider.getDummies();
+
+    final paymentProvider = Provider.of<PaymentProvider>(context);
+    paymentProvider.getDummies();
   }
 }
 
