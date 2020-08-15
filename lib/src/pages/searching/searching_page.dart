@@ -5,6 +5,7 @@ import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/utils/images.dart';
+import 'package:menta/src/utils/size.dart';
 import 'package:menta/src/widgets/circle_photo.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _State extends State<SearchingPage> {
     return Scaffold(
       body: LightStatusBar(
         child: Container(
-          padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
+          padding: EdgeInsets.fromLTRB(15, AppSize.notificationBar, 15, 0),
           child: Column(
             children: [
               _searchField,

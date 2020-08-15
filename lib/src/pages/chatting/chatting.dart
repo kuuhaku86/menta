@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/chat.dart';
 import 'package:menta/src/classes/chatting.dart';
 import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
+import 'package:menta/src/utils/size.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +26,13 @@ class _State extends State<ChattingPage> {
     _setUpProvider(context);
 
     return Scaffold(
-      backgroundColor: Color(0XFFF2F2F2),
       resizeToAvoidBottomPadding: true,
       body: LightStatusBar(
         child: Column(
           children: [
+            SizedBox(
+              height: AppSize.notificationBar,
+            ),
             _bar(context),
             Expanded(
               child: _chattingSection(context),
@@ -50,10 +54,12 @@ class _State extends State<ChattingPage> {
 
   _bar(context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 15, 20, 30),
-      child: Stack(
-        children: [
-          Align(
+        color: Colors.white,
+        alignment: Alignment.centerLeft,
+        height: 80,
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
+        child: Stack(alignment: Alignment.centerLeft, children: [
+          Container(
             alignment: Alignment.centerLeft,
             child: IconButton(
               onPressed: () {
@@ -67,24 +73,23 @@ class _State extends State<ChattingPage> {
           ),
 
           // Name
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              _chatting.enemy,
-              style: TextStyle(
-                  color: Color(0XFF2B3137),
-                  fontFamily: AppFonts.LATO,
-                  fontSize: 17.0),
-            ),
-          )
-        ],
-      ),
-    );
+          Container(
+              alignment: Alignment.center,
+              child: Text(
+                _chatting.enemy,
+                style: TextStyle(
+                    color: Color(0XFF2B3137),
+                    fontFamily: AppFonts.LATO,
+                    fontSize: 17.0),
+              ))
+        ]));
   }
 
   _chattingSection(context) {
     _chat(ChatModel chat) {
-      final padding = EdgeInsets.symmetric(horizontal: 10, vertical: 10);
+      final shape =
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0));
+      final padding = EdgeInsets.symmetric(horizontal: 20, vertical: 15);
       final textStyle = TextStyle(
           fontFamily: AppFonts.LATO,
           fontSize: 14.0,
@@ -97,6 +102,7 @@ class _State extends State<ChattingPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Card(
+              shape: shape,
               child: Container(
                 color: AppColors.blueChatting,
                 padding: padding,
@@ -117,6 +123,7 @@ class _State extends State<ChattingPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Card(
+              shape: shape,
               child: Container(
                 padding: padding,
                 child: Text(
@@ -132,25 +139,48 @@ class _State extends State<ChattingPage> {
 
     final chats = _chatting.chats;
 
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: chats.length,
-        itemBuilder: (context, i) {
-          final index = i ~/ 2;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      color: Color(0XFFF2F2F2),
+      child: Column(
+        children: [
+          Card(
+            color: Color(0XFFA2B1C2),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Text(
+                "Today",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: chats.length,
+              itemBuilder: (context, i) {
+                final index = i ~/ 2;
 
-          if (index.isOdd) {
-            return SizedBox(
-              height: 5,
-            );
-          }
-          return _chat(chats[i]);
-        });
+                if (index.isOdd) {
+                  return SizedBox(
+                    height: 10,
+                  );
+                }
+
+                return _chat(chats[i]);
+              })
+        ],
+      ),
+    );
   }
 
   _input(context) {
     return Card(
+      margin: EdgeInsets.fromLTRB(5, 0, 5, 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: [
             IconButton(
@@ -163,7 +193,27 @@ class _State extends State<ChattingPage> {
               ),
             ),
             Expanded(
-              child: TextField(),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                width: 40,
+                height: 40.0,
+                child: Card(
+                  color: AppColors.primaryDark,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             )
           ],
         ),

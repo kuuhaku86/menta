@@ -9,7 +9,7 @@ class AppColors {
 
   static const greenAvailable = Color(0XFF3DBA56);
   static const yellowRating = Color(0XFFF1AE42);
-  static const blueChatting = Color(0XFF2F5BCA);
+  static const blueChatting = Color(0XCC2F5BCA);
 
   //drawer header (scooter gradient)
   static const Color start = Color(0xFF36d1dc);

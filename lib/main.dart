@@ -5,6 +5,7 @@ import 'package:menta/src/classes/enum/environment.dart';
 import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/psychiatrist.dart';
+import 'package:menta/src/pages/chatting/chatting.dart';
 import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
@@ -41,9 +42,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainApp(),
+//      home: MainApp(),
 //      // Debugging
-//      home: SearchingPage(),
+      home: ChattingPage(),
 //      home: HomePage()
     );
   }
