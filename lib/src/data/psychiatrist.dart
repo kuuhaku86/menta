@@ -5,7 +5,7 @@ import 'package:menta/src/classes/review.dart';
 class PsychiatristProvider extends ChangeNotifier {
   var list = <PsychiatristModel>[];
 
-  getDummyList() {
+  getDummies() {
     list.clear();
 
     // Dummies
