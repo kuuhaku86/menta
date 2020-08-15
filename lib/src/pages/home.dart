@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/pages/post/write_post.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
+import 'package:menta/src/pages/login.dart';
+import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,9 +18,93 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _index = 0;
   User pengguna = LoggedUser().getUser();
+
+  ScrollController scrollController;
+  bool dialVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController()
+    ..addListener(() {
+      setDialVisible(scrollController.position.userScrollDirection ==
+      ScrollDirection.forward);
+    });
+  }
+
+  void setDialVisible(bool value) {
+    setState(() {
+      dialVisible = value;
+    });
+  }
+
+  Widget buildBody() {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: 30,
+      itemBuilder: (ctx, i) => ListTile(title: Text('Item $i'),));
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 22.0),
+      // child: Icon(Icons.add),
+      onOpen: () => print('OPENING DIAL'),
+      onClose: () => print('DIAL CLOSED'),
+      visible: dialVisible,
+      curve: Curves.bounceIn,
+      children: [
+        SpeedDialChild(
+          child: Icon(Icons.edit, color: Colors.blue),
+          backgroundColor: Colors.white,
+          onTap: () => {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => WritePost()
+            ))
+          },
+          labelWidget: Container(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5.0),
+                topRight: Radius.circular(5.0),
+                bottomLeft: Radius.circular(5.0),
+                bottomRight: Radius.circular(5.0)
+              )
+            ),
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            child: Text('Write Post', style: TextStyle(color: Colors.white),),
+          ),
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.settings_applications, color: Colors.blue),
+          backgroundColor: Colors.white,
+          onTap: () => {
+
+          },
+          labelWidget: Container(
+            decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    topRight: Radius.circular(5.0),
+                    bottomLeft: Radius.circular(5.0),
+                    bottomRight: Radius.circular(5.0)
+                )
+            ),
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            child: Text('Manage Post', style: TextStyle(color: Colors.white),),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget innerContainer(BuildContext context){
     return Container(
@@ -74,6 +163,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget imageSlider(){
+    print('tipe user ${pengguna.type}');
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: Center(
@@ -279,13 +369,16 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 onTap: () {
-                  // Update the state of the app.
-                  // ...
+                  LoggedUser.Logout();
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (context) => Login()
+                  ), (Route<dynamic> route) => false);
                 },
               ),
             ],
           ),
         ),
+        floatingActionButton: buildSpeedDial()
       ),
     );
   }
