@@ -9,3 +9,7 @@ class PaymentMethodModel {
   static const TYPE_DEBIT_CARD = "dc";
   static const TYPE_E_WALLET = "ew";
 }
+
+class VirtualAccountMethodModel extends PaymentMethodModel {
+  var number = "";
+}

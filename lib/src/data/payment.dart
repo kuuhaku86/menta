@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/enum/payment_methods.dart';
+import 'package:menta/src/classes/invoice.dart';
 import 'package:menta/src/classes/payment_method.dart';
 import 'package:menta/src/utils/images.dart';
 
 class PaymentProvider extends ChangeNotifier {
   var methods = PaymentMethodsModel();
+
+  var selectedInvoice = InvoiceModel();
+  var selectedMethod = PaymentMethodModel();
 
   getDummies() {
     methods.all.clear();
