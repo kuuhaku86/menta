@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:menta/src/classes/enum/environment.dart';
+import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
+import 'package:menta/src/utils/config.dart';
 import 'package:menta/src/utils/size.dart';
 import 'package:provider/provider.dart';
 
@@ -15,21 +18,22 @@ void main() {
       ChangeNotifierProvider(
         create: (c) => PsychiatristProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (c) => ChattingProvider(),
+      )
     ],
     child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  getDummies(context) {
-    final psychiatristProvider = Provider.of<PsychiatristProvider>(context);
-    psychiatristProvider.getDummyList();
-  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    getDummies(context);
+    if (AppConfigs.env == Environment.DEVELOPMENT) {
+      getDummies(context);
+    }
 
     return MaterialApp(
       title: 'Menta',
@@ -42,6 +46,14 @@ class MyApp extends StatelessWidget {
 //      home: SearchingPage(),
 //      home: HomePage()
     );
+  }
+
+  getDummies(context) {
+    final psychiatristProvider = Provider.of<PsychiatristProvider>(context);
+    psychiatristProvider.getDummies();
+
+    final chattingProvider = Provider.of<ChattingProvider>(context);
+    chattingProvider.getDummies();
   }
 }
 

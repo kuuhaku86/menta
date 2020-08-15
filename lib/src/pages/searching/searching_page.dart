@@ -5,6 +5,7 @@ import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/utils/images.dart';
+import 'package:menta/src/widgets/circle_photo.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -159,13 +160,11 @@ class _State extends State<SearchingPage> {
           children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: Image.network(
-                    "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
-                    height: 36.0,
-                    width: 36.0,
-                  ),
+                CirclePhoto(
+                  url:
+                      "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
+                  width: 36.0,
+                  height: 36.0,
                 ),
 
                 SizedBox(
