@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/enum/environment.dart';
+import 'package:menta/src/data/booking_invoice.dart';
 import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/payment.dart';
@@ -24,7 +25,8 @@ void main() {
       ChangeNotifierProvider(
         create: (c) => ChattingProvider(),
       ),
-      ChangeNotifierProvider(create: (c) => PaymentProvider())
+      ChangeNotifierProvider(create: (c) => PaymentProvider()),
+      ChangeNotifierProvider(create: (c) => BookingInvoice(),)
     ],
     child: MyApp(),
   ));
