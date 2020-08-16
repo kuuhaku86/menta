@@ -128,13 +128,12 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           authBottomText(
-            context: context,
-            unlinked_text: "No Account ? ",
-            linked_text: "Sign Up",
-            destination: RegisterPage()
-          ),
+              context: context,
+              unlinked_text: "No Account ? ",
+              linked_text: "Sign Up",
+              destination: RegisterPage()),
           submitButton(
-              isButtonEnabled: isLoginButtonEnabled(),
+              isButtonEnabled: true,
               text: "Login",
               callback: () => login(context))
         ],
@@ -142,11 +141,8 @@ class _LoginState extends State<Login> {
     );
   }
 
-  login(BuildContext context) {
-    print(_emailTextController.text);
-    print(_passwordTextController.text);
-    print(user_type);
-    User user = AppAuth.accountExist(
+  login(BuildContext context) async {
+    User user = await AppAuth.accountExist(
       email: _emailTextController.text,
       password: _passwordTextController.text,
       user_type: user_type,
@@ -154,7 +150,6 @@ class _LoginState extends State<Login> {
 
     if (user != null) {
       LoggedUser.Login(user);
-      print(LoggedUser().getUser().email);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return HomePage();
       }));

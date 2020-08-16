@@ -7,6 +7,9 @@ import 'package:menta/src/utils/user_type.dart';
 List<User> list_user = [
   User("Dummy", "123123123", DateTime.parse("1990-12-12"), "Sby", 12000, "dummy@email.com", "dummy123",UserType.psychiatrist),
   User("DummyPatient", "123123123", DateTime.parse("1990-12-12"), "Sby", 12000, "dummypatient@email.com", "dummy123",UserType.patient),
+  User("Sutejo", "123123123", DateTime.parse("1990-12-12"), "Sby", 12000, "sutejo@email.com", "dummy123",UserType.patient),
+  User("Danny", "123123123", DateTime.parse("1990-12-12"), "Sby", 12000, "danny@email.com", "dummy123",UserType.patient),
+  User("Jessica", "123123123", DateTime.parse("1990-12-12"), "Sby", 12000, "jessica@email.com", "dummy123",UserType.patient),
 ];
 
 List<CustomListItemTwo> list_story = [

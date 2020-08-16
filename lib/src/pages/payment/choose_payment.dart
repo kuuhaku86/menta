@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/payment_method.dart';
 import 'package:menta/src/data/payment.dart';
+import 'package:menta/src/pages/payment/va_invoice.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
@@ -72,15 +73,18 @@ class _State extends State<ChoosePaymentPage> {
         });
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Row(
           children: [
-            Image.asset(method.image),
+            Image.asset(
+              method.image,
+              width: 45,
+            ),
 
             // Name
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(left: 15),
+                padding: EdgeInsets.only(left: 20),
                 child: Text(
                   method.name,
                   style: TextStyle(fontFamily: AppFonts.PRIMARY),
@@ -167,11 +171,11 @@ class _State extends State<ChoosePaymentPage> {
 
   _button(context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       child: MaterialButton(
         minWidth: double.infinity,
         onPressed: () {
-          // TODO
+          Navigator.pushNamed(context, VirtualAccountInvoicePage.route);
         },
         color: AppColors.blueChatting,
         child: Text(

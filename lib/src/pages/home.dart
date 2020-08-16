@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
-import 'package:menta/src/pages/post/write_post.dart';
-import 'package:menta/src/pages/searching/searching_page.dart';
+import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
-import 'package:menta/src/pages/login.dart';
-import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,122 +14,38 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   int _index = 0;
   User pengguna = LoggedUser().getUser();
 
-  ScrollController scrollController;
-  bool dialVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController()
-    ..addListener(() {
-      setDialVisible(scrollController.position.userScrollDirection ==
-      ScrollDirection.forward);
-    });
-  }
-
-  void setDialVisible(bool value) {
-    setState(() {
-      dialVisible = value;
-    });
-  }
-
-  Widget buildBody() {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: 30,
-      itemBuilder: (ctx, i) => ListTile(title: Text('Item $i'),));
-  }
-
-  SpeedDial buildSpeedDial() {
-    return SpeedDial(
-      animatedIcon: AnimatedIcons.menu_close,
-      animatedIconTheme: IconThemeData(size: 22.0),
-      // child: Icon(Icons.add),
-      onOpen: () => print('OPENING DIAL'),
-      onClose: () => print('DIAL CLOSED'),
-      visible: dialVisible,
-      curve: Curves.bounceIn,
-      children: [
-        SpeedDialChild(
-          child: Icon(Icons.edit, color: Colors.blue),
-          backgroundColor: Colors.white,
-          onTap: () => {
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context) => WritePost()
-            ))
-          },
-          labelWidget: Container(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5.0),
-                topRight: Radius.circular(5.0),
-                bottomLeft: Radius.circular(5.0),
-                bottomRight: Radius.circular(5.0)
-              )
-            ),
-            margin: EdgeInsets.only(right: 10),
-            padding: EdgeInsets.all(6),
-            child: Text('Write Post', style: TextStyle(color: Colors.white),),
-          ),
-        ),
-        SpeedDialChild(
-          child: Icon(Icons.settings_applications, color: Colors.blue),
-          backgroundColor: Colors.white,
-          onTap: () => {
-
-          },
-          labelWidget: Container(
-            decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5.0),
-                    topRight: Radius.circular(5.0),
-                    bottomLeft: Radius.circular(5.0),
-                    bottomRight: Radius.circular(5.0)
-                )
-            ),
-            margin: EdgeInsets.only(right: 10),
-            padding: EdgeInsets.all(6),
-            child: Text('Manage Post', style: TextStyle(color: Colors.white),),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget innerContainer(BuildContext context){
+  Widget innerContainer(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
           Stack(
             children: <Widget>[
               Container(
-                width: double.infinity,
-                height: 200,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Container(
-                    height: 100.0,
-                    margin: const EdgeInsets.only(bottom: 6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.0)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 5.0,
-                        ),
-                      ],
+                  width: double.infinity,
+                  height: 200,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: Container(
+                      height: 100.0,
+                      margin: const EdgeInsets.only(bottom: 6.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(10.0)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ),
+                  )),
               imageSlider()
             ],
           ),
@@ -144,13 +55,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: ListView.builder(
                 itemCount: list_story.length,
                 padding: const EdgeInsets.all(10.0),
-                itemBuilder: (context, index){
-                  if(index == 0){
+                itemBuilder: (context, index) {
+                  if (index == 0) {
                     return Container(
-                      child: Text('Current Story',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),),
+                      child: Text(
+                        'Current Story',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
                     );
-                  }else{
+                  } else {
                     return list_story[index];
                   }
                 },
@@ -163,7 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget imageSlider(){
+  Widget imageSlider() {
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: Center(
@@ -172,48 +88,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: PageView.builder(
               itemCount: (pengguna.type == UserType.psychiatrist) ? 1 : 2,
               controller: PageController(viewportFraction: 0.8),
-              onPageChanged: (int index) => {
-                setState(() => _index = index)
-              },
-              itemBuilder: (_, i){
+              onPageChanged: (int index) => {setState(() => _index = index)},
+              itemBuilder: (_, i) {
                 return Transform.scale(
                     scale: i == _index ? 1 : 0.9,
-                    child: (pengguna.type == UserType.psychiatrist) ? imageContainer(context, 'assets/images/booked_time.png', 'Booked Time') : (
-                        (i == 1) ?
-                        imageContainer(context, 'assets/images/offline_consultation.png', 'Offline Consultation') :
-                        imageContainer(context, 'assets/images/online_consultation.png', 'Online Consultation')
-                    )
-                );
-              }
-          ),
+                    child: (pengguna.type == UserType.psychiatrist)
+                        ? imageContainer(
+                            context,
+                            'assets/images/booked_time.png',
+                            'Offline Consultation')
+                        : ((i == 1)
+                            ? imageContainer(
+                                context,
+                                'assets/images/offline_consultation.png',
+                                'Offline Consultation')
+                            : imageContainer(
+                                context,
+                                'assets/images/online_consultation.png',
+                                'Online Consultation')));
+              }),
         ),
       ),
     );
   }
 
-  Widget imageContainer(BuildContext context, String imageUrl, String jenis){
-    return InkWell(
-      onTap: () {
-        switch(jenis){
-          case 'Offline Consultation':{
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => SearchingPage()
-            ));
-          }break;
-          case 'Online Consultation':{
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context) => SearchingPage()
-            ));
-          }break;
-          case 'Booked Time':{
-//            Navigator.push(context, MaterialPageRoute(
-//              builder: (context) => {}
-//            ));
-          }break;
-        }
-      },
-      child: Container(
-        child: Image.asset(imageUrl, fit: BoxFit.fill,),
+  Widget imageContainer(BuildContext context, String imageUrl, String jenis) {
+    return Container(
+      child: Image.asset(
+        imageUrl,
+        fit: BoxFit.fill,
       ),
     );
   }
@@ -241,13 +144,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      SizedBox(height: 40,),
+                      SizedBox(
+                        height: 40,
+                      ),
                       Container(
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Icon(
-                              Icons.person
-                          ),
+                          child: Icon(Icons.person),
                         ),
                         width: double.infinity,
                       ),
@@ -257,10 +160,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Text(
                             pengguna.nama_lengkap,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
                           ),
                         ),
                         width: double.infinity,
@@ -271,10 +173,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Text(
                             pengguna.email,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
                           ),
                         ),
                         width: double.infinity,
@@ -286,8 +187,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     gradient: LinearGradient(
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
-                        colors: [AppColors.start, AppColors.end])
-                ),
+                        colors: [AppColors.start, AppColors.end])),
               ),
               ListTile(
                 title: Row(
@@ -377,29 +277,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   // ...
                 },
               ),
-              ListTile(
-                title: Row(
-                  children: <Widget>[
-                    Container(
-                      child: Icon(Icons.exit_to_app),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Text('Logout'),
-                    )
-                  ],
+              GestureDetector(
+                child: ListTile(
+                  title: Row(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(Icons.exit_to_app),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text('Logout'),
+                      )
+                    ],
+                  ),
+                  onTap: () {
+                    LoggedUser.Logout();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+                      return Login();
+                    }));
+                  },
                 ),
-                onTap: () {
-                  LoggedUser.Logout();
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                    builder: (context) => Login()
-                  ), (Route<dynamic> route) => false);
-                },
               ),
             ],
           ),
         ),
-        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? buildSpeedDial() : null
       ),
     );
   }
