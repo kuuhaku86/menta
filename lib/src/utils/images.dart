@@ -15,4 +15,8 @@ class AppImages {
 
   // Payment methods
   static final briva = join("img_briva.png");
+  static final mandiri = join("img_mandiri.jpg");
+  static final bni = join("img_bni.png");
+  static final linkaja = join("img_linkaja.png");
+  static final ovo = join("img_ovo.jpg");
 }

@@ -16,11 +16,11 @@ class PaymentProvider extends ChangeNotifier {
 
     final all = [
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.mandiri,
           name: "Mandiri",
           type: PaymentMethodModel.TYPE_DEBIT_CARD),
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.bni,
           name: "BNI",
           type: PaymentMethodModel.TYPE_DEBIT_CARD),
 
@@ -30,17 +30,17 @@ class PaymentProvider extends ChangeNotifier {
           name: "BRIVA",
           type: PaymentMethodModel.TYPE_VIRTUAL_ACCOUNT),
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.bni,
           name: "BNI",
           type: PaymentMethodModel.TYPE_VIRTUAL_ACCOUNT),
 
       // E-Wallet
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.linkaja,
           name: "LinkAja",
           type: PaymentMethodModel.TYPE_E_WALLET),
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.ovo,
           name: "OVO",
           type: PaymentMethodModel.TYPE_E_WALLET),
     ];

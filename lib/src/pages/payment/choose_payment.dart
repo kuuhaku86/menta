@@ -73,7 +73,7 @@ class _State extends State<ChoosePaymentPage> {
         });
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Row(
           children: [
             Image.asset(
@@ -84,7 +84,7 @@ class _State extends State<ChoosePaymentPage> {
             // Name
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(left: 15),
+                padding: EdgeInsets.only(left: 20),
                 child: Text(
                   method.name,
                   style: TextStyle(fontFamily: AppFonts.PRIMARY),
