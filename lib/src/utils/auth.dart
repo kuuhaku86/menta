@@ -11,11 +11,10 @@ class AppAuth {
     return false;
   }
 
-  static User accountExist(
-      {String email, String password, UserType user_type}) {
+  static Future<User> accountExist(
+      {String email, String password, UserType user_type}) async {
     for (var item in list_user) {
-      if (item.email == email) {
-        print(item.type);
+      if (item.email.trim() == email.trim()) {
         return (item.password != password || item.type != user_type)
             ? null
             : item;

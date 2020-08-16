@@ -10,7 +10,6 @@ class LoggedUser {
 
   LoggedUser._internal(User user) {
     state_user = user;
-    print(state_user);
   }
 
   static Login(User user) {
