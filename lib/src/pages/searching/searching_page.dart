@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/psychiatrist.dart';
 import 'package:menta/src/data/psychiatrist.dart';
+import 'package:menta/src/pages/booking/booked_time.dart';
 import 'package:menta/src/pages/chatting/chatting.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
@@ -306,7 +307,7 @@ class _State extends State<SearchingPage> {
               Row(
                 children: [
                   SizedBox(
-                    width: 20.0,
+                    width: 5.0,
                   ),
 
                   // Communication buttons
@@ -336,10 +337,15 @@ class _State extends State<SearchingPage> {
 
                   // Booking button
                   Container(
-                    margin: EdgeInsets.only(left: 15, right: 10),
+                    margin: EdgeInsets.only(left: 10, right: 5),
                     child: MaterialButton(
                       onPressed: () {
-                        // TODO
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => BookingPage(
+                            p: p,
+                            imageUrl: "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
+                          )
+                        ));
                       },
                       color: AppColors.primary,
                       shape: RoundedRectangleBorder(

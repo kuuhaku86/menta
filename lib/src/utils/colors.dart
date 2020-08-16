@@ -15,6 +15,9 @@ class AppColors {
   static const Color start = Color(0xFF36d1dc);
   static const Color end = Color(0xFF5b86e5);
 
+  //booking page color
+  static const Color backgroundColor = Color(0xFF5b86e5);
+
   // Text
   static const primaryText = Color(0XFF3A3A3A);
   static const textGray1 = Color(0XFF8F8F8F);

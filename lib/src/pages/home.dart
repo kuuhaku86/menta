@@ -6,6 +6,7 @@ import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/pages/post/write_post.dart';
+import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
 import 'package:menta/src/pages/login.dart';
@@ -163,7 +164,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget imageSlider(){
-    print('tipe user ${pengguna.type}');
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: Center(
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               itemBuilder: (_, i){
                 return Transform.scale(
                     scale: i == _index ? 1 : 0.9,
-                    child: (pengguna.type == UserType.psychiatrist) ? imageContainer(context, 'assets/images/booked_time.png', 'Offline Consultation') : (
+                    child: (pengguna.type == UserType.psychiatrist) ? imageContainer(context, 'assets/images/booked_time.png', 'Booked Time') : (
                         (i == 1) ?
                         imageContainer(context, 'assets/images/offline_consultation.png', 'Offline Consultation') :
                         imageContainer(context, 'assets/images/online_consultation.png', 'Online Consultation')
@@ -192,8 +192,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget imageContainer(BuildContext context, String imageUrl, String jenis){
-    return Container(
-      child: Image.asset(imageUrl, fit: BoxFit.fill,),
+    return InkWell(
+      onTap: () {
+        switch(jenis){
+          case 'Offline Consultation':{
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => SearchingPage()
+            ));
+          }break;
+          case 'Online Consultation':{
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => SearchingPage()
+            ));
+          }break;
+          case 'Booked Time':{
+//            Navigator.push(context, MaterialPageRoute(
+//              builder: (context) => {}
+//            ));
+          }break;
+        }
+      },
+      child: Container(
+        child: Image.asset(imageUrl, fit: BoxFit.fill,),
+      ),
     );
   }
 
@@ -378,7 +399,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ],
           ),
         ),
-        floatingActionButton: buildSpeedDial()
+        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? buildSpeedDial() : null
       ),
     );
   }
