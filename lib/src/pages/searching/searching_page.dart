@@ -47,6 +47,7 @@ class _State extends State<SearchingPage> {
 
   get _searchField {
     return Container(
+      margin: EdgeInsets.only(top: 10),
       child: TextFormField(
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),

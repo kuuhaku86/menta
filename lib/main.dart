@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
       routes: {
         VirtualAccountInvoicePage.route: (c) => VirtualAccountInvoicePage()
       },
-//      home: MainApp(),
+      home: MainApp(),
 //      // Debugging
-      home: ChoosePaymentPage(),
+//      home: SearchingPage(),
 //      home: HomePage()
     );
   }
