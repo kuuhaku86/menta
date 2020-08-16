@@ -1,3 +1,5 @@
+import 'package:menta/src/classes/invoice.dart';
+
 class PaymentMethodModel {
   var image = "";
   var name = "";
@@ -8,8 +10,4 @@ class PaymentMethodModel {
   static const TYPE_VIRTUAL_ACCOUNT = "va";
   static const TYPE_DEBIT_CARD = "dc";
   static const TYPE_E_WALLET = "ew";
-}
-
-class VirtualAccountMethodModel extends PaymentMethodModel {
-  var number = "";
 }

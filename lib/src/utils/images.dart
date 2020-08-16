@@ -12,4 +12,7 @@ class AppImages {
   static final star = join("ic_star.png");
   static final arrowDownOutlined = join("ic_arrow_down_outlined.png");
   static final filter = join("ic_filter.png");
+
+  // Payment methods
+  static final briva = join("img_briva.png");
 }

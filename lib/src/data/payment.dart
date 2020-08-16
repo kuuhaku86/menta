@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menta/src/classes/enum/payment_methods.dart';
 import 'package:menta/src/classes/invoice.dart';
 import 'package:menta/src/classes/payment_method.dart';
+import 'package:menta/src/classes/va_invoice.dart';
 import 'package:menta/src/utils/images.dart';
 
 class PaymentProvider extends ChangeNotifier {
@@ -25,7 +26,7 @@ class PaymentProvider extends ChangeNotifier {
 
       // Virtual Account
       PaymentMethodModel(
-          image: AppImages.star,
+          image: AppImages.briva,
           name: "BRIVA",
           type: PaymentMethodModel.TYPE_VIRTUAL_ACCOUNT),
       PaymentMethodModel(
@@ -45,5 +46,8 @@ class PaymentProvider extends ChangeNotifier {
     ];
 
     methods.all = all;
+
+    selectedInvoice = VirtualAccountInvoiceModel(
+        number: "8271088345327789", method: all[2], totalPrice: "Rp 100.000");
   }
 }

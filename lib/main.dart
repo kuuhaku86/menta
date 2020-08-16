@@ -9,6 +9,7 @@ import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/payment/choose_payment.dart';
+import 'package:menta/src/pages/payment/va_invoice.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/config.dart';
 import 'package:menta/src/utils/size.dart';
@@ -33,9 +34,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (AppConfigs.env == Environment.DEVELOPMENT) {
-      getDummies(context);
-    }
+    getDummies(context);
 
     return MaterialApp(
       title: 'Menta',
@@ -43,6 +42,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      routes: {
+        VirtualAccountInvoicePage.route: (c) => VirtualAccountInvoicePage()
+      },
 //      home: MainApp(),
 //      // Debugging
       home: ChoosePaymentPage(),
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
   }
 
   getDummies(context) {
+    if (AppConfigs.env != Environment.DEVELOPMENT) return;
+
     final psychiatristProvider = Provider.of<PsychiatristProvider>(context);
     psychiatristProvider.getDummies();
 
@@ -78,8 +82,7 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    AppSize.height = MediaQuery.of(context).size.height;
-    AppSize.width = MediaQuery.of(context).size.width;
+    getSize(context);
 
     return Scaffold(
         body: Center(
@@ -92,6 +95,11 @@ class _MainAppState extends State<MainApp> {
         ),
       ),
     ));
+  }
+
+  getSize(context) {
+    AppSize.height = MediaQuery.of(context).size.height;
+    AppSize.width = MediaQuery.of(context).size.width;
   }
 
   _checkLogin() => Timer(Duration(seconds: 3), () async {
