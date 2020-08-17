@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/invoice.dart';
 import 'package:menta/src/classes/payment_method.dart';
+import 'package:menta/src/classes/payment_methods.dart';
 import 'package:menta/src/classes/va_invoice.dart';
 import 'package:menta/src/utils/images.dart';
 
-import 'file:///E:/Projects/menta/lib/src/classes/payment_methods.dart';
 
 class PaymentProvider extends ChangeNotifier {
   var methods = PaymentMethodsModel();
