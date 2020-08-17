@@ -4,5 +4,5 @@ class BookingInvoice extends ChangeNotifier {
   var date = '';
   var timePicked = '';
   var day = '';
-  var checkoud = false;
+  var checkout = false;
 }

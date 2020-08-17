@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/booking_invoice.dart';
 import 'package:menta/src/data/dummy.dart';
@@ -9,6 +11,7 @@ import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +23,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _index = 0;
   User pengguna = LoggedUser().getUser();
+  BookingInvoice invoice;
+  bool dialVisible = true;
+  ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController = ScrollController()
+      ..addListener(() {
+        setDialVisible(scrollController.position.userScrollDirection ==
+            ScrollDirection.forward);
+      });
+  }
+
+  void setDialVisible(bool value) {
+    setState(() {
+      dialVisible = value;
+    });
+  }
 
   Widget innerContainer(BuildContext context) {
     return Container(
@@ -167,6 +190,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    invoice = Provider.of<BookingInvoice>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -345,7 +369,51 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? null
+            :
+        (invoice.checkout) ? buildSpeedDial() : null,
       ),
+    );
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 22.0),
+      // child: Icon(Icons.add),
+      onOpen: () => print('OPENING DIAL'),
+      onClose: () => print('DIAL CLOSED'),
+      visible: dialVisible,
+      curve: Curves.bounceIn,
+      children: [
+        SpeedDialChild(
+          child: Icon(Icons.accessibility, color: Colors.white),
+          backgroundColor: Colors.deepOrange,
+          onTap: () => print('FIRST CHILD'),
+          label: 'First Child',
+          labelStyle: TextStyle(fontWeight: FontWeight.w500),
+          labelBackgroundColor: Colors.deepOrangeAccent,
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.brush, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('SECOND CHILD'),
+          label: 'Second Child',
+          labelStyle: TextStyle(fontWeight: FontWeight.w500),
+          labelBackgroundColor: Colors.green,
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.keyboard_voice, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () => print('THIRD CHILD'),
+          labelWidget: Container(
+            color: Colors.blue,
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            child: Text('Custom Label Widget'),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -7,9 +7,11 @@ import 'package:menta/src/data/chatting.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/data/payment.dart';
 import 'package:menta/src/data/psychiatrist.dart';
+import 'package:menta/src/pages/booking/booked_time.dart';
 import 'package:menta/src/pages/home.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/payment/va_invoice.dart';
+import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/config.dart';
 import 'package:menta/src/utils/size.dart';
 import 'package:provider/provider.dart';
@@ -85,15 +87,15 @@ class _MainAppState extends State<MainApp> {
     getSize(context);
 
     return Scaffold(
-        body: Center(
-      child: AnimatedOpacity(
-        opacity: 1,
-        duration: Duration(seconds: 3),
-        child: Image.asset(
-          "assets/images/logo.png",
-          height: 100.0,
+      body: Center(
+        child: AnimatedOpacity(
+          opacity: 1,
+          duration: Duration(seconds: 3),
+          child: Image.asset(
+            "assets/images/logo.png",
+            height: 100.0,
+          ),
         ),
-      ),
     ));
   }
 

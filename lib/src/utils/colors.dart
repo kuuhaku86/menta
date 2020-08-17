@@ -6,6 +6,7 @@ class AppColors {
   static const primaryDark = Color(0XFF223B75);
   static const Color primary_opacity_reduced = Color.fromRGBO(47, 91, 202, 0.5);
   static const Color grey_font = Color.fromRGBO(143, 134, 143, 1);
+  static const Color primary_reduced = Color.fromRGBO(47, 91, 202, 0.02);
 
   static const greenAvailable = Color(0XFF3DBA56);
   static const yellowRating = Color(0XFFF1AE42);

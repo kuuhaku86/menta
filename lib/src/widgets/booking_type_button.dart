@@ -39,7 +39,7 @@ class _BookingTypeButtonState extends State<BookingTypeButton>{
         height: AppSize.width * 0.1,
         width: AppSize.width * 0.3,
         decoration: BoxDecoration(
-          color: (widget.selected) ? AppColors.primary : Colors.white,
+          color: (widget.selected) ? AppColors.primary : AppColors.primary_reduced,
           borderRadius: BorderRadius.all(
               Radius.circular(5.0)
           ),
