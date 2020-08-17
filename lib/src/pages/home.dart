@@ -8,10 +8,14 @@ import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/pages/booked_consultation.dart';
 import 'package:menta/src/pages/login.dart';
+import 'package:menta/src/pages/payment/choose_payment.dart';
+import 'package:menta/src/pages/post/write_post.dart';
 import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
 import 'package:provider/provider.dart';
+
+import 'inbox/inbox.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -369,7 +373,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? null
+        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? buildSpeedDialPsy()
             :
         (invoice.checkout) ? buildSpeedDial() : null,
       ),
@@ -387,35 +391,136 @@ class _HomePageState extends State<HomePage> {
       curve: Curves.bounceIn,
       children: [
         SpeedDialChild(
-          child: Icon(Icons.accessibility, color: Colors.white),
-          backgroundColor: Colors.deepOrange,
-          onTap: () => print('FIRST CHILD'),
-          label: 'First Child',
-          labelStyle: TextStyle(fontWeight: FontWeight.w500),
-          labelBackgroundColor: Colors.deepOrangeAccent,
-        ),
-        SpeedDialChild(
-          child: Icon(Icons.brush, color: Colors.white),
-          backgroundColor: Colors.green,
-          onTap: () => print('SECOND CHILD'),
-          label: 'Second Child',
-          labelStyle: TextStyle(fontWeight: FontWeight.w500),
-          labelBackgroundColor: Colors.green,
-        ),
-        SpeedDialChild(
-          child: Icon(Icons.keyboard_voice, color: Colors.white),
+          child: Icon(Icons.cancel, color: Colors.white),
           backgroundColor: Colors.blue,
-          onTap: () => print('THIRD CHILD'),
+          onTap: () {
+            setState(() {
+              invoice.checkout = !invoice.checkout;
+            });
+          },
           labelWidget: Container(
-            color: Colors.blue,
             margin: EdgeInsets.only(right: 10),
             padding: EdgeInsets.all(6),
-            child: Text('Custom Label Widget'),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Text('Cancel', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ),
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.payment, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => ChoosePaymentPage()
+            ));
+          },
+          labelWidget: Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(5),
+                  topLeft: Radius.circular(5),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Text('Pay', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           ),
         ),
       ],
     );
   }
+
+  SpeedDial buildSpeedDialPsy() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 22.0),
+      // child: Icon(Icons.add),
+      onOpen: () => print('OPENING DIAL'),
+      onClose: () => print('DIAL CLOSED'),
+      visible: dialVisible,
+      curve: Curves.bounceIn,
+      children: [
+        SpeedDialChild(
+          child: Icon(Icons.notifications, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => InboxPage()
+            ));
+          },
+          labelWidget: Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Text('Message', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ),
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.settings_applications, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () {
+
+          },
+          labelWidget: Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Text('Manage Post', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ),
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.edit, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => WritePost()
+            ));
+          },
+          labelWidget: Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Text('Write Post', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ),
+        ),
+      ],
+    );
+  }
+
 }
 
 class _ArticleDescription extends StatelessWidget {

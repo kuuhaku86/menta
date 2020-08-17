@@ -1,3 +1,4 @@
+
 import 'package:menta/src/classes/payment_method.dart';
 
 class PaymentMethodsModel {

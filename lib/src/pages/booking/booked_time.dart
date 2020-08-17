@@ -470,7 +470,7 @@ class _State extends State<BookingPage> {
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: Text('Rp. 500.000,00',
+                        child: Text('Rp. 100.000,00',
                           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
                       ),
                     )

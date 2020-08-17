@@ -1,5 +1,3 @@
-import 'package:menta/src/classes/invoice.dart';
-
 class PaymentMethodModel {
   var image = "";
   var name = "";
