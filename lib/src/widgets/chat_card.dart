@@ -22,6 +22,7 @@ class _ChatCardState extends State<ChatCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
       child: GestureDetector(
         onTap: () => {
           Navigator.push(context, MaterialPageRoute(
@@ -29,25 +30,48 @@ class _ChatCardState extends State<ChatCard> {
           ))
         },
         child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  offline_consultation.patient.nama_lengkap,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+          elevation: 3,
+          child: Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    child: Icon(Icons.email),
                   ),
+                  flex: 0,
                 ),
-                subtitle: Text(
-                  "Konsultasi",
-                  style: TextStyle(
-                    fontSize: 15,
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          offline_consultation.patient.nama_lengkap,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Konsultasi",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  flex: 1,
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Container(
+                    child: Text(offline_consultation.timestamps),
+                  ),
+                  flex: 0,
+                )
+              ],
+            ),
           ),
         ),
       ),

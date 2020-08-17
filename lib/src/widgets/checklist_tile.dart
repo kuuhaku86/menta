@@ -23,53 +23,78 @@ class _OfflineConsultationCardState extends State<OfflineConsultationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
       child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              leading: checked
-                  ? Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    )
-                  : Icon(
-                      Icons.timer,
-                      color: AppColors.grey_font,
-                    ),
-              title: Text(
-                DateFormat("HH:mm").format(offline_consultation.start).toString() 
-                + " - " 
-                + DateFormat("HH:mm").format(offline_consultation.finish).toString(),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
+        elevation: 3,
+        child: Container(
+          margin: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              checked ? Expanded(
+                child: Icon(Icons.check, color: Colors.green,),
+                flex: 0,
+              )
+                  : Expanded(
+                child: Icon(Icons.timer, color: AppColors.grey_font,),
+                flex: 0,
               ),
-              subtitle: Text(
-                offline_consultation.patient.nama_lengkap,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            DateFormat("HH:mm").format(offline_consultation.start).toString()
+                                + " - "
+                                + DateFormat("HH:mm").format(offline_consultation.finish).toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              offline_consultation.patient.nama_lengkap,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )
+                      )
+                    ],
+                  ),
                 ),
+                flex: 1,
               ),
-            ),
-            ButtonTheme.bar(
-              child: ButtonBar(
-                children: <Widget>[
-                  checked ?
-                  SizedBox() :
-                  RaisedButton(
-                      child: Text("It's Finished"),
-                      onPressed: () => {
+              Expanded(
+                child: ButtonTheme.bar(
+                  child: ButtonBar(
+                    children: <Widget>[
+                      checked ?
+                      SizedBox() :
+                      RaisedButton(
+                          child: Text("It's Finished"),
+                          onPressed: () => {
                             this.setState(() {
                               checked = true;
                             })
                           }),
-                ],
-              ),
-            )
-          ],
+                    ],
+                  ),
+                ),
+                flex: 0,
+              )
+            ],
+          ),
         ),
       ),
     );

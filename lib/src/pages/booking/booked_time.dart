@@ -14,8 +14,6 @@ import 'package:menta/src/widgets/booking_type_button.dart';
 import 'package:provider/provider.dart';
 
 import '../home.dart';
-
-final scaffoldState = GlobalKey<ScaffoldState>();
 class BookingPage extends StatefulWidget {
   final PsychiatristModel p;
   final String imageUrl;
@@ -335,7 +333,6 @@ class _State extends State<BookingPage> {
 
     return SafeArea(
       child: Scaffold(
-        key: scaffoldState,
         body: _mainContent(queryData, context),
       ),
     );

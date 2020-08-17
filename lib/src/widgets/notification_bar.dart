@@ -30,6 +30,7 @@ Widget appendNotificationBar(BuildContext context, String title) {
                 style: TextStyle(
                     color: Color(0XFF2B3137),
                     fontFamily: AppFonts.PRIMARY,
+                    fontWeight: FontWeight.bold,
                     fontSize: 20.0),
               ))
         ]));

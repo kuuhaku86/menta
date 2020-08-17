@@ -15,7 +15,7 @@ class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       resizeToAvoidBottomPadding: true,
       body: LightStatusBar(
         child: Column(
@@ -23,7 +23,7 @@ class _InboxPageState extends State<InboxPage> {
             SizedBox(
               height: AppSize.notificationBar,
             ),
-            appendNotificationBar(context, "Inbox"),
+            appendNotificationBar(context, "Message Inbox"),
             Container(
               child: _list_view_builder(context),
             ),
