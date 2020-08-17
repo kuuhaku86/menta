@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menta/src/classes/user.dart';
+import 'package:menta/src/data/booking_invoice.dart';
 import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/pages/booked_consultation.dart';
 import 'package:menta/src/pages/login.dart';
+import 'package:menta/src/pages/searching/searching_page.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/user_type.dart';
 
@@ -96,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                         ? imageContainer(
                             context,
                             'assets/images/booked_time.png',
-                            'Offline Consultation')
+                            'Booked Time')
                         : ((i == 1)
                             ? imageContainer(
                                 context,
@@ -113,12 +116,53 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget imageContainer(BuildContext context, String imageUrl, String jenis) {
-    return Container(
-      child: Image.asset(
-        imageUrl,
-        fit: BoxFit.fill,
-      ),
-    );
+    switch(jenis){
+      case 'Offline Consultation':{
+        return InkWell(
+          onTap: () => {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (cxt) => SearchingPage()
+            ))
+          },
+          child: Container(
+            child: Image.asset(
+              imageUrl,
+              fit: BoxFit.fill,
+            ),
+          ),
+        );
+      }break;
+      case 'Online Consultation':{
+        return InkWell(
+          onTap: () => {
+          Navigator.push(context, MaterialPageRoute(
+          builder: (cxt) => SearchingPage()
+          ))
+        },
+          child: Container(
+            child: Image.asset(
+              imageUrl,
+              fit: BoxFit.fill,
+            ),
+          ),
+        );
+      }break;
+      case 'Booked Time':{
+        return InkWell(
+          onTap: () => {
+          Navigator.push(context, MaterialPageRoute(
+          builder: (cxt) => BookedConsultationPage()
+          ))
+        },
+          child: Container(
+            child: Image.asset(
+              imageUrl,
+              fit: BoxFit.fill,
+            ),
+          ),
+        );
+      }break;
+    }
   }
 
   @override

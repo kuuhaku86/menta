@@ -24,9 +24,6 @@ class BookingPage extends StatefulWidget {
 
 class _State extends State<BookingPage> {
   BookingInvoice invoice;
-  List<WorkingDay> morning;
-  List<WorkingDay> afternoon;
-  List<WorkingDay> evening;
 
   @override
   void initState() {
@@ -46,7 +43,7 @@ class _State extends State<BookingPage> {
     });
   }
 
-  _mainContent(queryData, context) {
+  _mainContent(queryData, context, morning, afternoon, evening) {
     return Container(
       child: SingleChildScrollView(
         child: Stack(
@@ -180,12 +177,12 @@ class _State extends State<BookingPage> {
                           itemCount: afternoon.length,
                           itemBuilder: (cxt, idx) {
                             if(afternoon[idx].day == 'Afternoon'){
-//                              return BookingTypeButton(
-//                                btnText: '${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
-//                                changeState: () => _setInvoiceTime('${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
-//                                    afternoon[idx].day),
-//                                selected: invoice.date == '${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
-//                              );
+                              return BookingTypeButton(
+                                btnText: '${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
+                                changeState: () => _setInvoiceTime('${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
+                                    afternoon[idx].day),
+                                selected: invoice.date == '${afternoon[idx].startHour} - ${afternoon[idx].closingHour}',
+                              );
                             return Text('text');
                             }
                             return null;
@@ -255,13 +252,13 @@ class _State extends State<BookingPage> {
   Widget build(BuildContext context) {
     invoice = Provider.of<BookingInvoice>(context);
     MediaQueryData queryData = MediaQuery.of(context);
-    morning = listDay;
-    afternoon = listDay;
-    evening = listDay;
+    List<WorkingDay> morning = listDay;
+    List<WorkingDay> afternoon = listDay;
+    List<WorkingDay> evening = listDay;
 
     return SafeArea(
       child: Scaffold(
-        body: _mainContent(queryData, context),
+        body: _mainContent(queryData, context, morning, afternoon, evening),
       ),
     );
   }
