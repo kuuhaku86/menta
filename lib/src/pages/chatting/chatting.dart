@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:menta/src/classes/chat.dart';
 import 'package:menta/src/classes/chatting.dart';
 import 'package:menta/src/data/chatting.dart';
+import 'package:menta/src/data/logged_user.dart';
 import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/utils/size.dart';
+import 'package:menta/src/utils/user_type.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +80,7 @@ class _State extends State<ChattingPage> {
           Container(
               alignment: Alignment.center,
               child: Text(
-                _chatting.enemy,
+                LoggedUser().getUser().type == UserType.patient? _chatting.enemy : "Andre Azhar",
                 style: TextStyle(
                     color: Color(0XFF2B3137),
                     fontFamily: AppFonts.PRIMARY,
