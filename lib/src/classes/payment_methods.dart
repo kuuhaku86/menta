@@ -1,4 +1,4 @@
-import '../payment_method.dart';
+import 'package:menta/src/classes/payment_method.dart';
 
 class PaymentMethodsModel {
   var all = <PaymentMethodModel>[];
