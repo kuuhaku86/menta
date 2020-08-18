@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:menta/src/classes/consultation.dart';
 import 'package:menta/src/classes/user.dart';
 import 'package:menta/src/data/booking_invoice.dart';
 import 'package:menta/src/data/dummy.dart';
 import 'package:menta/src/data/logged_user.dart';
+import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/pages/booked_consultation.dart';
 import 'package:menta/src/pages/login.dart';
 import 'package:menta/src/pages/payment/choose_payment.dart';
@@ -30,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   BookingInvoice invoice;
   bool dialVisible = true;
   ScrollController scrollController;
+  final _provider = _Provider();
 
   @override
   void initState() {
@@ -123,10 +126,8 @@ class _HomePageState extends State<HomePage> {
                 return Transform.scale(
                     scale: i == _index ? 1 : 0.9,
                     child: (pengguna.type == UserType.psychiatrist)
-                        ? imageContainer(
-                            context,
-                            'assets/images/booked_time.png',
-                            'Booked Time')
+                        ? imageContainer(context,
+                            'assets/images/booked_time.png', 'Booked Time')
                         : ((i == 1)
                             ? imageContainer(
                                 context,
@@ -143,58 +144,67 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget imageContainer(BuildContext context, String imageUrl, String jenis) {
-    switch(jenis){
-      case 'Offline Consultation':{
-        return InkWell(
-          onTap: () => {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (cxt) => SearchingPage()
-            ))
-          },
-          child: Container(
-            child: Image.asset(
-              imageUrl,
-              fit: BoxFit.fill,
+    switch (jenis) {
+      case 'Offline Consultation':
+        {
+          return InkWell(
+            onTap: () {
+              _provider.psychiatrist.currentConsultationType =
+                  Consultation.OFFLINE;
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (cxt) => SearchingPage()));
+            },
+            child: Container(
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-        );
-      }break;
-      case 'Online Consultation':{
-        return InkWell(
-          onTap: () => {
-          Navigator.push(context, MaterialPageRoute(
-          builder: (cxt) => SearchingPage()
-          ))
-        },
-          child: Container(
-            child: Image.asset(
-              imageUrl,
-              fit: BoxFit.fill,
+          );
+        }
+        break;
+      case 'Online Consultation':
+        {
+          return InkWell(
+            onTap: () {
+              _provider.psychiatrist.currentConsultationType =
+                  Consultation.ONLINE;
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (cxt) => SearchingPage()));
+            },
+            child: Container(
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-        );
-      }break;
-      case 'Booked Time':{
-        return InkWell(
-          onTap: () => {
-          Navigator.push(context, MaterialPageRoute(
-          builder: (cxt) => BookedConsultationPage()
-          ))
-        },
-          child: Container(
-            child: Image.asset(
-              imageUrl,
-              fit: BoxFit.fill,
+          );
+        }
+        break;
+      case 'Booked Time':
+        {
+          return InkWell(
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (cxt) => BookedConsultationPage()))
+            },
+            child: Container(
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-        );
-      }break;
+          );
+        }
+        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     invoice = Provider.of<BookingInvoice>(context);
+    _provider._setUp(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -364,7 +374,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onTap: () {
                     LoggedUser.Logout();
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) {
                       return Login();
                     }));
                   },
@@ -373,9 +384,9 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        floatingActionButton: (pengguna.type == UserType.psychiatrist) ? buildSpeedDialPsy()
-            :
-        (invoice.checkout) ? buildSpeedDial() : null,
+        floatingActionButton: (pengguna.type == UserType.psychiatrist)
+            ? buildSpeedDialPsy()
+            : (invoice.checkout) ? buildSpeedDial() : null,
       ),
     );
   }
@@ -410,16 +421,19 @@ class _HomePageState extends State<HomePage> {
                 bottomRight: Radius.circular(5),
               ),
             ),
-            child: Text('Cancel', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              'Cancel',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
         SpeedDialChild(
           child: Icon(Icons.payment, color: Colors.white),
           backgroundColor: Colors.blue,
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => ChoosePaymentPage()
-            ));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ChoosePaymentPage()));
           },
           labelWidget: Container(
             margin: EdgeInsets.only(right: 10),
@@ -427,13 +441,17 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5),
-                  topLeft: Radius.circular(5),
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
+                topRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
               ),
             ),
-            child: Text('Pay', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              'Pay',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ],
@@ -454,9 +472,8 @@ class _HomePageState extends State<HomePage> {
           child: Icon(Icons.notifications, color: Colors.white),
           backgroundColor: Colors.blue,
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => InboxPage()
-            ));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => InboxPage()));
           },
           labelWidget: Container(
             margin: EdgeInsets.only(right: 10),
@@ -470,15 +487,17 @@ class _HomePageState extends State<HomePage> {
                 bottomRight: Radius.circular(5),
               ),
             ),
-            child: Text('Message', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              'Message',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
         SpeedDialChild(
           child: Icon(Icons.settings_applications, color: Colors.white),
           backgroundColor: Colors.blue,
-          onTap: () {
-
-          },
+          onTap: () {},
           labelWidget: Container(
             margin: EdgeInsets.only(right: 10),
             padding: EdgeInsets.all(6),
@@ -491,16 +510,19 @@ class _HomePageState extends State<HomePage> {
                 bottomRight: Radius.circular(5),
               ),
             ),
-            child: Text('Manage Post', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              'Manage Post',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
         SpeedDialChild(
           child: Icon(Icons.edit, color: Colors.white),
           backgroundColor: Colors.blue,
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context) => WritePost()
-            ));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => WritePost()));
           },
           labelWidget: Container(
             margin: EdgeInsets.only(right: 10),
@@ -514,13 +536,16 @@ class _HomePageState extends State<HomePage> {
                 bottomRight: Radius.circular(5),
               ),
             ),
-            child: Text('Write Post', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              'Write Post',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ],
     );
   }
-
 }
 
 class _ArticleDescription extends StatelessWidget {
@@ -645,5 +670,14 @@ class CustomListItemTwo extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _Provider {
+  PsychiatristProvider
+      psychiatrist; // TODO: there should be a specialist consulting provider
+
+  _setUp(context) {
+    psychiatrist = Provider.of<PsychiatristProvider>(context);
   }
 }

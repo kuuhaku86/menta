@@ -23,6 +23,7 @@ class ChattingPage extends StatefulWidget {
 class _State extends State<ChattingPage> {
   ChattingProvider _chattingProvider;
   final _controller = _Controller();
+  final _key = GlobalKey<AnimatedListState>();
 
   @override
   Widget build(context) {
@@ -79,12 +80,29 @@ class _State extends State<ChattingPage> {
           // Name
           Container(
               alignment: Alignment.center,
-              child: Text(
-                LoggedUser().getUser().type == UserType.patient? _chatting.enemy : "Andre Azhar",
-                style: TextStyle(
-                    color: Color(0XFF2B3137),
-                    fontFamily: AppFonts.PRIMARY,
-                    fontSize: 17.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
+                    ),
+                    radius: 15.0,
+                  ),
+
+                  Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: Text(
+                      LoggedUser().getUser().type == UserType.patient
+                          ? _chatting.enemy
+                          : "Andre Azhar",
+                      style: TextStyle(
+                          color: Color(0XFF2B3137),
+                          fontFamily: AppFonts.PRIMARY,
+                          fontSize: 17.0),
+                    ),
+                  )
+                ],
               ))
         ]));
   }
@@ -105,14 +123,18 @@ class _State extends State<ChattingPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Card(
-              shape: shape,
-              child: Container(
-                color: AppColors.blueChatting,
-                padding: padding,
-                child: Text(
-                  chat.message,
-                  style: textStyle,
+            Flexible(
+              child: Card(
+                shape: shape,
+                child: Container(
+                  color: AppColors.blueChatting,
+                  padding: padding,
+                  child: Text(
+                    chat.message,
+                    style: textStyle,
+                    overflow: TextOverflow.clip,
+                    maxLines: 100,
+                  ),
                 ),
               ),
             ),
@@ -126,13 +148,18 @@ class _State extends State<ChattingPage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Card(
-              shape: shape,
-              child: Container(
-                padding: padding,
-                child: Text(
-                  chat.message,
-                  style: textStyle,
+            Flexible(
+              flex: 2,
+              child: Card(
+                shape: shape,
+                child: Container(
+                  padding: padding,
+                  child: Text(
+                    chat.message,
+                    style: textStyle,
+                    maxLines: 100,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
               ),
             ),
@@ -161,23 +188,49 @@ class _State extends State<ChattingPage> {
               ),
             ),
           ),
-          ListView.builder(
+          AnimatedList(
+              key: _key,
               shrinkWrap: true,
-              itemCount: chats.length,
-              itemBuilder: (context, i) {
-                final index = i ~/ 2;
+              initialItemCount: chats.length,
+              itemBuilder: (context, i, animation) {
+//                final index = i ~/ 2;
+//
+//                if (index.isOdd) {
+//                  return SizedBox(
+//                    height: 10,
+//                  );
+//                }
 
-                if (index.isOdd) {
-                  return SizedBox(
-                    height: 10,
-                  );
-                }
-
-                return _chat(chats[i]);
+                return Column(
+                  children: [
+                    _chat(chats[i]),
+                    Container(
+                      height: 10,
+                    )
+                  ],
+                );
               })
         ],
       ),
     );
+  }
+
+  _falselyAddChats(context) async {
+    Future add(newMessage, {senderIsMe = false}) async {
+      final newChat = ChatModel(message: newMessage, senderIsMe: senderIsMe);
+      _chatting.chats.add(newChat);
+      _key.currentState.insertItem(_chatting.chats.length - 1,
+          duration: Duration(seconds: 2));
+      return new Future.delayed(const Duration(seconds: 2), () => "1");
+    }
+
+    await add("Good Morning", senderIsMe: true);
+    await add("Hello, Good Morning. Hope you blessed all day. Is there anything I can help?",
+        senderIsMe: false);
+    await add("I am stressed for several days because my mother recently died",
+        senderIsMe: true);
+    await add("Oh sorry. Were you very close to your mother?", senderIsMe: false);
+    await add("Closer than anything", senderIsMe: true);
   }
 
   _input(context) {
@@ -190,7 +243,8 @@ class _State extends State<ChattingPage> {
           children: [
             IconButton(
               onPressed: () {
-                // TODO
+                // TODO: temporary
+                _falselyAddChats(context);
               },
               icon: Icon(
                 Icons.add,

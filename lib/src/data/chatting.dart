@@ -8,7 +8,7 @@ class ChattingProvider extends ChangeNotifier {
   getDummies() {
     chattings.clear();
 
-    final chatOfMe = ChatModel(senderIsMe: true, message: "Assalamu alaikum");
+    /*final chatOfMe = ChatModel(senderIsMe: true, message: "Assalamu alaikum");
 
     final chatOfHim = ChatModel(senderIsMe: false, message: "Waalaikumsalam");
 
@@ -18,6 +18,9 @@ class ChattingProvider extends ChangeNotifier {
 
     for (var i = 0; i < 15; i++) {
       chattings.add(chatting);
-    }
+    }*/
+
+    final chatting = ChattingModel(chats: [], enemy: "Dr Alan Hubbard");
+    chattings.add(chatting);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:menta/src/classes/consultation.dart';
 import 'package:menta/src/classes/psychiatrist.dart';
 import 'package:menta/src/data/psychiatrist.dart';
 import 'package:menta/src/pages/booking/booked_time.dart';
@@ -116,6 +117,10 @@ class _State extends State<SearchingPage> {
     );
   }
 
+  bool get _isOnline {
+    return psychiatristProvider.currentConsultationType == Consultation.ONLINE;
+  }
+
   _psychiatristList(context) {
     _listItem(PsychiatristModel p, {position}) {
       keyValue(key, value, {endspace = 5.0}) {
@@ -167,11 +172,17 @@ class _State extends State<SearchingPage> {
             children: [
               Row(
                 children: [
-                  CirclePhoto(
+                  /*CirclePhoto(
                     url:
                         "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
                     width: 36.0,
                     height: 36.0,
+                  ),*/
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
+                    ),
+                    radius: 25.0,
                   ),
 
                   SizedBox(
@@ -313,7 +324,7 @@ class _State extends State<SearchingPage> {
 
                   // Communication buttons
                   Expanded(
-                      child: Card(
+                    /*child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0)),
                     child: Container(
@@ -334,25 +345,30 @@ class _State extends State<SearchingPage> {
                         ],
                       ),
                     ),
-                  )),
+                  )*/
+                    child: Container(),
+                  ),
 
                   // Booking button
                   Container(
                     margin: EdgeInsets.only(left: 10, right: 5),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => BookingPage(
-                            p: p,
-                            imageUrl: "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
-                          )
-                        ));
+                        final page = _isOnline
+                            ? ChattingPage()
+                            : BookingPage(
+                                p: p,
+                                imageUrl:
+                                    "https://img.okezone.com/content/2020/08/12/51/2261120/cristiano-ronaldo-pindah-ke-klub-divisi-tiga-meksiko-3JjmqpIina.jpg",
+                              );
+                        final route = MaterialPageRoute(builder: (c) => page);
+                        Navigator.push(context, route);
                       },
                       color: AppColors.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0)),
                       child: Text(
-                        "Book",
+                        _isOnline ? "Chat" : "Book",
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: AppFonts.PRIMARY,
@@ -388,13 +404,5 @@ class _State extends State<SearchingPage> {
             return _listItem(list[index], position: index);
           }),
     );
-  }
-
-  _goToChatting(context, position) {
-    final page = ChattingPage(position: position);
-
-    final route = MaterialPageRoute(builder: (c) => page);
-
-    Navigator.push(context, route);
   }
 }

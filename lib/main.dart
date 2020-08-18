@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
     psychiatristProvider.getDummies();
 
     final chattingProvider = Provider.of<ChattingProvider>(context);
-    chattingProvider.getDummies();
+     chattingProvider.getDummies();
 
     final paymentProvider = Provider.of<PaymentProvider>(context);
     paymentProvider.getDummies();

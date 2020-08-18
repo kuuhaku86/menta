@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:menta/src/classes/consultation.dart';
 import 'package:menta/src/classes/psychiatrist.dart';
 import 'package:menta/src/classes/review.dart';
 
 class PsychiatristProvider extends ChangeNotifier {
   var list = <PsychiatristModel>[];
+  var currentConsultationType = Consultation.ONLINE;
 
   getDummies() {
     list.clear();
@@ -68,10 +70,14 @@ class PsychiatristProvider extends ChangeNotifier {
     ];
 
     psychiatrists.forEach((p) {
-      final review = ReviewModel();
-      for (var i = 0; i < 25; i++) {
-        p.reviews.add(review);
-      }
+      p.reviews = [
+        ReviewModel(rating: 5, content: "Friendly"),
+        ReviewModel(rating: 5, content: "my restlessness is now gone"),
+        ReviewModel(rating: 4, content: "Solving but please be more friendly"),
+        ReviewModel(
+            rating: 4,
+            content: "Please be more timely. But anyway he is so smart")
+      ];
     });
 
     list = psychiatrists;

@@ -1,6 +1,7 @@
+import 'package:menta/src/classes/consultation.dart';
 import 'package:menta/src/classes/user.dart';
 
-class OfflineConsultation {
+class OfflineConsultation extends Consultation {
   DateTime start, finish;
   User patient;
   String timestamps;
