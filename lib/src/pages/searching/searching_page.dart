@@ -9,7 +9,6 @@ import 'package:menta/src/utils/colors.dart';
 import 'package:menta/src/utils/fonts.dart';
 import 'package:menta/src/utils/images.dart';
 import 'package:menta/src/utils/size.dart';
-import 'package:menta/src/widgets/circle_photo.dart';
 import 'package:menta/src/widgets/system/light_status_bar.dart';
 import 'package:provider/provider.dart';
 

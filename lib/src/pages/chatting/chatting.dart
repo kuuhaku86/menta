@@ -21,7 +21,7 @@ class ChattingPage extends StatefulWidget {
 }
 
 class _State extends State<ChattingPage> {
-  ChattingProvider _chattingProvider;
+  ChattingProvider _provider;
   final _controller = _Controller();
   final _key = GlobalKey<AnimatedListState>();
 
@@ -40,7 +40,9 @@ class _State extends State<ChattingPage> {
             ),
             _bar(context),
             Expanded(
-              child: _chattingSection(context),
+              child: SingleChildScrollView(
+                child: _chattingSection(context),
+              ),
             ),
             _input(context)
           ],
@@ -50,11 +52,11 @@ class _State extends State<ChattingPage> {
   }
 
   ChattingModel get _chatting {
-    return _chattingProvider.chattings[widget.position];
+    return _provider.chattings[widget.position];
   }
 
   _setUpProvider(context) {
-    _chattingProvider = Provider.of<ChattingProvider>(context);
+    _provider = Provider.of<ChattingProvider>(context);
   }
 
   _bar(context) {
@@ -89,7 +91,6 @@ class _State extends State<ChattingPage> {
                     ),
                     radius: 15.0,
                   ),
-
                   Container(
                     margin: EdgeInsets.only(left: 15),
                     child: Text(
@@ -172,7 +173,7 @@ class _State extends State<ChattingPage> {
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      color: Color(0XFFF2F2F2),
+//      color: Color(0XFFF2F2F2),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -189,6 +190,7 @@ class _State extends State<ChattingPage> {
             ),
           ),
           AnimatedList(
+              physics: NeverScrollableScrollPhysics(),
               key: _key,
               shrinkWrap: true,
               initialItemCount: chats.length,
@@ -205,7 +207,7 @@ class _State extends State<ChattingPage> {
                   children: [
                     _chat(chats[i]),
                     Container(
-                      height: 10,
+                      height: i == chats.length - 1 ? 50 : 10,
                     )
                   ],
                 );
@@ -215,21 +217,32 @@ class _State extends State<ChattingPage> {
     );
   }
 
+  _addChat(message) {
+    final chat = ChatModel(message: message, senderIsMe: true);
+    _chatting.chats.add(chat);
+  }
+
   _falselyAddChats(context) async {
     Future add(newMessage, {senderIsMe = false}) async {
       final newChat = ChatModel(message: newMessage, senderIsMe: senderIsMe);
       _chatting.chats.add(newChat);
+
       _key.currentState.insertItem(_chatting.chats.length - 1,
           duration: Duration(seconds: 2));
-      return new Future.delayed(const Duration(seconds: 2), () => "1");
+
+      return new Future.delayed(const Duration(seconds: 2), () {
+        return "1";
+      });
     }
 
     await add("Good Morning", senderIsMe: true);
-    await add("Hello, Good Morning. Hope you blessed all day. Is there anything I can help?",
+    await add(
+        "Hello, Good Morning. Hope you blessed all day. Is there anything I can help?",
         senderIsMe: false);
     await add("I am stressed for several days because my mother recently died",
         senderIsMe: true);
-    await add("Oh sorry. Were you very close to your mother?", senderIsMe: false);
+    await add("Oh sorry. Were you very close to your mother?",
+        senderIsMe: false);
     await add("Closer than anything", senderIsMe: true);
   }
 
@@ -261,14 +274,13 @@ class _State extends State<ChattingPage> {
             ),
             InkWell(
               onTap: () {
-                setState(() {
-                  final text = _controller.newMessage.text;
-                  final chat = ChatModel(
-                    message: text,
-                    senderIsMe: true,
-                  );
-                  _chatting.chats.add(chat);
+                final text = _controller.newMessage.text;
+                _addChat(text);
 
+                _key.currentState.insertItem(_chatting.chats.length - 1,
+                    duration: Duration(seconds: 0));
+
+                setState(() {
                   _controller.newMessage.clear();
                 });
               },
