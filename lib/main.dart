@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Menta',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
